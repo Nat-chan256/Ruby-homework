@@ -25,3 +25,12 @@ elsif x <= 10 and x > 5
 else
 	puts "Слишком мало"
 end
+
+print "Теперь введите значение у: "
+y = STDIN.gets.chomp.downcase.to_i
+
+unless y > 10000 then
+	puts "Вы ввели #{y}"
+else
+	puts "Слишком большое число, в монитор не влезет :("
+end
