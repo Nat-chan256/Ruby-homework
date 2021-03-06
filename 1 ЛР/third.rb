@@ -36,4 +36,3 @@ else
 end
 
 print "А Вы любите ООП, я так погляжу :) " if pl == "java" or pl == "c#"
-
