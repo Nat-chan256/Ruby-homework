@@ -1,3 +1,23 @@
+def digitsSum(num)
+    sum = 0
+	num.digits.map{ |digit| sum += digit }
+	sum
+end
+
+def maxDigit(num)
+    num.digits.max
+end
+
+def minDigit(num)
+    num.digits.min
+end
+
+def digitsProduct(num)
+	prod = 1
+	num.digits.map{ |digit| prod *= digit }
+	prod
+end
+
 def isPrime(num)
 	result = true
 	for i in (2..(num/2)) do
@@ -61,3 +81,40 @@ def maxOddNotPrimeDelAndDigitsProdGCF(num)
 	digProd = digitsProduct(num)
 	gcf = GCF(maxDel, digProd)
 end
+
+if ARGV.length == 0
+	puts "Hello world"
+elsif ARGV.length == 1
+	puts "Не хватает аргумента"
+else
+	case ARGV[0]
+		when "1"
+			puts "Сумма цифр: " + digitsSum(ARGV[1].to_i).to_s
+			
+		when "2"
+			puts "Максимальная цифра: " + maxDigit(ARGV[1].to_i).to_s
+			
+		when "3"
+			puts "Минимальная цифра: " + minDigit(ARGV[1].to_i).to_s
+		
+		when "4"
+			puts "Произведение цифр: " + digitsProduct(ARGV[1].to_i).to_s
+		
+		when "5"
+			puts "Максимальный простой делитель: " + maxPrimeDelimeter(ARGV[1].to_i).to_s
+		
+		when "6"
+			puts "Произведение цифр числа, не делящихся на 5: " + digitsNotDivisibleBy5Product(ARGV[1].to_i).to_s
+		
+		when "7"
+			puts "НОД максимального нечетного непростого делителя
+числа и прозведения цифр данного числа: " + maxOddNotPrimeDelAndDigitsProdGCF(ARGV[1].to_i).to_s
+
+		else
+			puts "Номер метода некорректен"
+
+	end
+		
+		
+end
+	
