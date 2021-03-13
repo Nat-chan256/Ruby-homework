@@ -32,3 +32,10 @@ puts "Было: #{arr}"
 arr.unshift(-2)
 puts "Стало: #{arr}" 
 
+
+puts "\n3. << "
+puts "Было: #{arr}"
+arr << -3
+puts "Стало: #{arr}" 
+
+
