@@ -2,9 +2,9 @@ def readArray(length)
 	puts "Введите #{length} элементов массива. Каждый элемент на отдельной строке"
     arr = Array.new(length)
 
-    for i in 1 .. length
-        print "#{i}: "
-        arr << STDIN.gets.chomp.strip.downcase.to_i
+    for i in 0 .. length-1
+        print "#{i+1}: "
+        arr[i] = STDIN.gets.chomp.strip.downcase.to_i
     end
 
     return arr
@@ -22,8 +22,13 @@ arr = readArray(ARGV[0].to_i)
 #Добавление элемента в массива
 
 puts "\n1. += "
-print "Было: "
-arr.each {|elem| print "#{elem} "}
+puts "Было: #{arr}"
 arr += [-1]
-print "\nСтало: " 
-arr.each {|elem| print "#{elem} "}
+puts "Стало: #{arr}" 
+
+
+puts "\n2. unshift "
+puts "Было: #{arr}"
+arr.unshift(-2)
+puts "Стало: #{arr}" 
+
