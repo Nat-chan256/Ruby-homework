@@ -45,6 +45,15 @@ arr.insert(4, -4)
 puts "Стало: #{arr}" 
 
 
+puts "\n5. push "
+puts "Было: #{arr}"
+arr.push(-5)
+puts "Стало: #{arr}" 
+
+
+
+
+
 
 
 
