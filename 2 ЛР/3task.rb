@@ -39,3 +39,12 @@ arr << -3
 puts "Стало: #{arr}" 
 
 
+puts "\n4. insert "
+puts "Было: #{arr}"
+arr.insert(4, -4)
+puts "Стало: #{arr}" 
+
+
+
+
+
