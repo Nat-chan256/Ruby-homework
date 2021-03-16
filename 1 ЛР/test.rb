@@ -1,0 +1,1 @@
+puts("line1\nline2\nline3\rline4".lines)

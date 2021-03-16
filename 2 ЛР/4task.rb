@@ -1,6 +1,6 @@
 def readArray(filePath)
 	if not File.file?(filePath) #Проверка существования файла
-		return Array.New 
+		return Array.new 
 	end
     file = File.new(filePath, "r:UTF-8")
     lines = file.readlines
@@ -10,7 +10,7 @@ def readArray(filePath)
 end
 
 if ARGV.length < 1
-    abort "Передайте путь к файле в качестве параметра программы"
+    abort "Передайте путь к файлу в качестве параметра программы"
 end
 
 arr = readArray(ARGV[0])

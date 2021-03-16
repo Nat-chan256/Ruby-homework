@@ -118,7 +118,7 @@ while answer != "0"
 			
 			puts "\n19. delete_suffix : "
 			puts "\"hello\".delete_suffix(\"lo\") = " + "hello".delete_suffix("lo")
-			puts "\"hello\".delete_suffix(\"lo\") = " + "hello".delete_suffix("he")
+			puts "\"hello\".delete_suffix(\"he\") = " + "hello".delete_suffix("he")
 			
 			puts "\n20. dump : "
 			puts "\"Hello \\t world \\n\".dump = " + "Hello \t world \n".dump
