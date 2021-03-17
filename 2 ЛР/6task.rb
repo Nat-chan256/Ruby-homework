@@ -1,4 +1,4 @@
-#33, 45, 57
+#45, 57
 
 #1.9
 #Нахождение элементов, расположенных перед последним минимальным
@@ -41,4 +41,16 @@ def doSignsAlternate(arr)
 		end
 	end
 	return true
+end
+
+#1.45
+#Нахождение суммы элементов, значение которых лежит в интервале a..b
+def sumOfElemsInInterval(arr, a, b)
+	sum = 0
+	for elem in arr
+		if elem >= a and elem <= b
+			sum += elem
+		end
+	end
+	return sum
 end
