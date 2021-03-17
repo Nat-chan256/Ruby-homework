@@ -27,11 +27,7 @@ end
 #1.57
 #Нахождение элементов, больших, чем сумма всех предыдущих элементов
 def elemsBiggerThanSumOfPreviousOnes(arr)
-	sum = 0
-	return arr.select{
-	|elem| elem > sum
-	sum += elem
-	}
+	return arr.filter_map.with_index{|elem, index| elem if index == 0 or elem > arr[0..index-1].sum}
 end
 
 def readArrayFromFile(filePath)
