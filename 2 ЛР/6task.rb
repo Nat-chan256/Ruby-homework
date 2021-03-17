@@ -1,5 +1,3 @@
-#45, 57
-
 #1.9
 #Нахождение элементов, расположенных перед последним минимальным
 def findElemsPreviousToLastMinimum(arr)
@@ -53,4 +51,18 @@ def sumOfElemsInInterval(arr, a, b)
 		end
 	end
 	return sum
+end
+
+#1.57
+#Нахождение элементов, больших, чем сумма всех предыдущих элементов
+def elemsBiggerThanSumOfPreviousOnes(arr)
+	result = Array.new
+	sum = 0
+	for elem in arr
+		if elem > sum
+			result.push(elem)
+		end
+		sum += elem
+	end
+	return result
 end
