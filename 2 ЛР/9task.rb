@@ -11,3 +11,8 @@ def countWordsOfEvenCharsNum(str)
 end
 
 #16
+#Дан массив в котором находятся строки "белый", "синий" и "красный" в случайном порядке. Необходимо упорядочить массив так, чтобы получился российский флаг.
+def sortTricolor(arr)
+	sampleArr = ["белый", "синий", "красный"]
+	return arr.sort_by{|element| sampleArr.index(element.downcase)}
+end
