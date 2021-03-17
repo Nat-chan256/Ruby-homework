@@ -1,4 +1,4 @@
-#21, 33, 45, 57
+#33, 45, 57
 
 #1.9
 #Нахождение элементов, расположенных перед последним минимальным
@@ -30,4 +30,15 @@ def findElemsAfterFirstMaximum(arr)
 		end
 	end
 	return result
+end
+
+#1.33
+#Проверка, чередуются ли в массиве положительные и отрицательные числа
+def doSignsAlternate(arr)
+	for i in 0..arr.length-2
+		if arr[i] * arr[i+1] > 0
+			return false
+		end
+	end
+	return true
 end
