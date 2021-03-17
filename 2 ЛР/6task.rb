@@ -15,3 +15,19 @@ def findElemsPreviousToLastMinimum(arr)
 	end
 	return result
 end
+
+#1.21
+#Нахождение элементов после первого максимального
+def findElemsAfterFirstMaximum(arr)
+	result = Array.new
+	max = arr[arr.length-1]
+	index = arr.length-1
+	for i in (1..arr.length-1).to_a.reverse
+		if arr[i] >= max
+			max = arr[i]
+			result.insert(0, arr[i+1..index])
+			index = i
+		end
+	end
+	return result
+end
