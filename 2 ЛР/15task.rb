@@ -1,5 +1,3 @@
-#9 11
-
 #Частота встречаемости символа в алфавите
 $frequencyInAlphabet = {
 	'о' => 0.10983,
@@ -63,6 +61,34 @@ $frequencyInAlphabet = {
 	'j' => 0.001965,
 	'q' => 0.001962
 }
+
+
+#Нахождение максимального среднего веса ASCII-кода каждой тройки символов в строке
+def avgMaxWeighsOfTriplesASCIICode(line)
+	return line.scan(/.../).map {|triple| findMaxAvgWeighOfASCIICode(triple)}
+end
+
+
+#Нахождение дисперсии
+def dispersion(values)
+	return expectedValue(values.map {|value| value**2}) - expectedValue(values)**2
+end
+
+
+#Нахождение математического ожидания величины
+def expectedValue(values)
+	p = Hash.new #Вероятности для каждого значения values
+	uniqValues = values.uniq
+	uniqValues.each {|value| p[value] = values.count(value) / values.length.to_f}
+	return uniqValues.map {|value| value * p[value]}.sum
+end
+
+
+# Нахождение среднего веса ASCII кодов группы символов chairs
+# chars - строка символов 
+def findMaxAvgWeighOfASCIICode(chars)
+	return chars.each_char.map {|char| char.bytes[0]}.sum / chars.each_char.map {|char| char.bytes[0]}.length
+end
 
 
 #Нахождение наиболее часто встречающегося символа в строке
@@ -140,6 +166,15 @@ def sortByASCIICodesStandartDeviation(lines)
 	return lines.sort_by {|line| standartDeviationForArray( line.bytes.max ,  line[0..(line.length/2-1)].each_char.map.with_index {|char, i| (char.bytes[0] - line[line.length - i - 1].bytes[0])} )}
 end
 
+
+#11
+# Отсортировать строки
+# В порядке увеличения квадратичного отклонения дисперсии максимального среднего веса ASCII-кода тройки символов в строке от максимального сред-него веса ASCII-кода тройки символов в
+# первой строке
+# lines - массив строк
+def sortByDispertionStandartDeviation(line)
+	return lines.sort_by {|line| standartDeviation( dispersion(avgMaxWeighsOfTriplesASCIICode(line)) , findMaxWeighOfTriplesASCIICode(lines[0])  )}
+end
 
 if ARGV.length < 1
 	abort "Введите путь ко входному файлу в качестве аргумента программы"
