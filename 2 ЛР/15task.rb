@@ -1,4 +1,4 @@
-#5, 9 11
+#9 11
 
 #Частота встречаемости символа в алфавите
 $frequencyInAlphabet = {
@@ -93,6 +93,12 @@ def standartDeviation(val1, val2)
 	return Math.sqrt((val1 - val2)**2) 
 end
 
+
+#Квадратичное отклонение, но теперь второй аргумент - массив
+def standartDeviationForArray(val, arr)
+	return Math.sqrt(  arr.map {|elem| (elem - val)**2}.sum  / arr.length )
+end
+
 #Нахождение частоты встречаемости символа в строке
 def symbolFrequency(symbol, line)
 	return line.count(symbol) / line.length.to_f
@@ -126,6 +132,13 @@ def sortByStandartDeviation(lines)
 end
 
 
+#9
+# Отсортировать строки
+# В порядке увеличения квадратичного отклонения между наибольшим ASCII-кодом символа строки и разницы в ASCII-кодах пар зеркально расположенных символов строки (относительно ее середины)
+# lines - массив строк
+def sortByASCIICodesStandartDeviation(lines)
+	return lines.sort_by {|line| standartDeviationForArray( line.bytes.max ,  line[0..(line.length/2-1)].each_char.map.with_index {|char, i| (char.bytes[0] - line[line.length - i - 1].bytes[0])} )}
+end
 
 
 if ARGV.length < 1
@@ -134,4 +147,4 @@ end
 
 lines = readFromFile(ARGV[0])
 
-puts(sortByDiffBetweenFrequencies(lines))
+puts(sortByASCIICodesStandartDeviation(lines))
