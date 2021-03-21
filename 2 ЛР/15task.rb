@@ -87,7 +87,7 @@ end
 # Нахождение среднего веса ASCII кодов группы символов chairs
 # chars - строка символов 
 def findMaxAvgWeighOfASCIICode(chars)
-	return chars.each_char.map {|char| char.bytes[0]}.sum / chars.each_char.map {|char| char.bytes[0]}.length
+	return chars.each_char.map {|char| char.bytes[0].to_s(2).count("1")}.sum / chars.length
 end
 
 
@@ -131,6 +131,24 @@ def symbolFrequency(symbol, line)
 end
 
 
+# Сортировка по длине строк
+# lines - массив строк
+def sortByLength(lines)
+	return lines.sort_by {|line| line.length}
+end
+
+# Сортировка по количеству слов в строке
+# lines - массив строк
+def sortByWordsNum(lines)
+	return lines.sort_by {|line| line.split.count}
+end
+
+
+# Сортировка по количеству слов, стоящих после чисео
+# lines - массив строк
+def sortByWordsAfterNums(lines)
+	lines.sort_by {|line| line.split.select {|w1, w2| not w1.scan(/\d+/).empty?}.count}
+end
 
 #3
 # Отсортировать строки
@@ -172,8 +190,8 @@ end
 # В порядке увеличения квадратичного отклонения дисперсии максимального среднего веса ASCII-кода тройки символов в строке от максимального сред-него веса ASCII-кода тройки символов в
 # первой строке
 # lines - массив строк
-def sortByDispertionStandartDeviation(line)
-	return lines.sort_by {|line| standartDeviation( dispersion(avgMaxWeighsOfTriplesASCIICode(line)) , findMaxWeighOfTriplesASCIICode(lines[0])  )}
+def sortByDispertionStandartDeviation(lines)
+	return lines.sort_by {|line| standartDeviation( dispersion(avgMaxWeighsOfTriplesASCIICode(line)) , avgMaxWeighsOfTriplesASCIICode(lines[0]).max  )}
 end
 
 if ARGV.length < 1
@@ -182,4 +200,44 @@ end
 
 lines = readFromFile(ARGV[0])
 
-puts(sortByASCIICodesStandartDeviation(lines))
+answer = "1"
+
+while answer != "0"
+	puts "\n\nВведите номер пункта:
+0. Выход
+1. Сортировка по длине строки
+2. Сортировка по количеству слов строке
+3. Сортировка по количеству слов, идущих после чисел
+4. Сортировка в порядке увеличения разницы между частотой наиболее часто встречаемого символа в строке и частотой его появления в алфавите
+5. Сортировка в порядке увеличения квадратичного отклонения частоты встречаемости самого часто встречаемого в строке символа от частоты его встречаемости в текстах на этом алфавите
+6. Сортировка в порядке увеличения квадратичного отклонения между наибольшим ASCII-кодом символа строки и разницы в ASCII-кодах пар зеркально расположенных символов строки (относительно ее середины)
+7. Сортировка в порядке увеличения квадратичного отклонения дисперсии максимального среднего веса ASCII-кода тройки символов в строке от максимального сред-него веса ASCII-кода тройки символов в первой строке"
+
+	answer = STDIN.gets.chomp.strip
+
+	case answer
+	
+		when "1"
+			puts sortByLength(lines)
+			
+		when "2"
+			puts sortByWordsNum(lines)
+	
+		when "3"
+			puts sortByWordsAfterNums(lines)
+	
+		when "4"
+			puts sortByDiffBetweenFrequencies(lines)
+	
+		when "5"
+			puts sortByStandartDeviation(lines)
+	
+		when "6"
+			puts sortByASCIICodesStandartDeviation(lines)
+			
+		when "7"
+			puts sortByDispertionStandartDeviation(lines)
+	
+	
+	end
+end
