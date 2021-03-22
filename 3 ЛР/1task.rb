@@ -6,31 +6,32 @@ class Employee
 		
 
     def initialize(*args)
-        if args.length == 9
-			@surname = args[0]
-            @name = args[1]
-            @patronymic = args[2]
-            @birthdate = args[3]
-            @phoneNumber = args[4]
-			@address = args[5]
-            @email = args[6]
-            @passSeriesNumber = args[7]
-            @speciality = args[8]
-            @experience = 0
+      
+		if not (args.length == 9 or args.length == 13)
+			raise "Количество аргументов должно равняться 9 или 13"
+		end
+	  
+		@surname = args[0]
+		@name = args[1]
+		@patronymic = args[2]
+		@birthdate = args[3]
+		@phoneNumber = args[4]
+		@address = args[5]
+		@email = args[6]
+		@passSeriesNumber = args[7]
+		@speciality = args[8]
+		@experience = 0
 
-        elsif args.length == 13
-            experience = args[9]
+        if args.length == 13
+            @experience = args[9]
 
             class << self
                 attr_accessor :prevWorkName, :prevWorkPostName, :prevWorkSalary
             end
 
-            prevWorkName = args[10]
-			prevWorkPostName = args[11]
-            prevWorkSalary = args[12]
-
-        else
-            raise "Количество аргументов должно равняться 9 или 13"
+            @prevWorkName = args[10]
+			@prevWorkPostName = args[11]
+            @prevWorkSalary = args[12]
         end
     end
 end
