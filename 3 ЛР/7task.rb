@@ -1,3 +1,5 @@
+module Emp
+
 class Employee
 
     attr_accessor :surname, :name, :patronymic,
@@ -177,12 +179,4 @@ email: #{@email}
 		employeeData
 	end
 end
-
-testEmp = Employee.new("Иванов", "Иван-  Руслан", "Иванович", "30.04.1988", "+79957517964", "myMail@mail.ru", "Красная 12", "0315 224124", "Программист")
-
-
-testEmp.passSeriesNumber = "  1234 232324   "
-puts testEmp.passSeriesNumber
-
-#Вызывает исключение
-#testEmp.passSeriesNumber = "  1234-555555   "
+end
