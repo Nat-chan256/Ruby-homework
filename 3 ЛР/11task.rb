@@ -148,3 +148,6 @@ while answer != "n"
 	print "Продолжить ввод сотрудников?(y/n): "
 	answer = STDIN.gets.chomp.strip
 end
+
+puts "Добавленные сотрудники:"
+terminalView.showEmployeesData
