@@ -1,49 +1,5 @@
-require_relative "7task"
-
-include Emp
-
-class TestEmployee
-	
-	def initialize
-		@emp = Employee.new("Иванов", "Иван-  Руслан", "Иванович", "30.04.1988", "+79957517964", "myMail@mail.ru", "Красная 12", "0315 224124", "Программист")
-	end
-	
-	def testDate(value)
-		begin
-			@emp.birthDate = value
-			puts "#{@emp.birthDate}"
-		rescue
-			puts "Некорректно введена дата"
-		end
-	end
-	
-	def testEmail(value)
-		begin
-			@emp.email = value
-			puts "#{@emp.email}"
-		rescue
-			puts "Некорректно введен email"
-		end
-	end
-	
-	def testFullName(value)
-		begin
-			@emp.fullName = value
-			puts "#{@emp.name} #{@emp.surname} #{@emp.patronymic}"
-		rescue
-			puts "Некорректно введено ФИО"
-		end
-	end
-	
-	def testPhoneNumber(value)
-		begin
-			@emp.phoneNumber = value
-			puts "#{@emp.phoneNumber}"
-		rescue
-			puts "Некорректно введен номер телефона"
-		end
-	end
-end
+require_relative 'TestEmployee'
+include TestEmp
 
 # Для адекватной работы с кириллицей в консоли
 if (Gem.win_platform?)
@@ -72,22 +28,41 @@ while answer != "0"
 		when "1"
 			print "Введите ФИО: "
 			fullName = STDIN.gets.chomp
-			testEmp.testFullName(fullName)
+			result = testEmp.testFullName(fullName)
+			if result != nil
+				puts result
+			else
+				puts "Некорректно введено ФИО"
+			end
 			
 		when "2"
 			print "Введите номер телефона: "
 			phoneNum = STDIN.gets.chomp
-			testEmp.testPhoneNumber(phoneNum)
+			result = testEmp.testPhoneNumber(phoneNum)
+			if result != nil
+				puts result
+			else
+				puts "Некорректно введен номер телефона"
+			end
 			
 		when "3"
 			print "Введите дату: "
 			date = STDIN.gets.chomp
-			testEmp.testDate(date)
+			result = testEmp.testDate(date)
+			if result != nil
+				puts result
+			else
+				puts "Некорректно введена дата"
+			end
 			
 		when "4"
 			print "Введите email: "
 			email = STDIN.gets.chomp
-			testEmp.testEmail(email)
-			
+			result = testEmp.testEmail(email)
+			if result != nil
+				puts result
+			else
+				puts "Некорректно введен email"
+			end
 	end
 end
