@@ -1,18 +1,15 @@
-#Чтение содержимого файла
-def readFromFile(filePath)
-	if not File.file?(filePath) #Проверка существования файла
-		return nil
-	end
-    file = File.new(filePath, "r:UTF-8")
-    lines = file.readlines
-	return lines.join(" ")
+# Для адекватной работы с кириллицей в консоли
+if (Gem.win_platform?)
+  Encoding.default_external = Encoding.find(Encoding.locale_charmap)
+  Encoding.default_internal = __ENCODING__
+
+  [STDIN, STDOUT].each do |io|
+    io.set_encoding(Encoding.default_external, Encoding.default_internal)
+  end
 end
 
-if ARGV.length < 1
-	abort "Введите путь к файлу с входными данными в качестве аргумента программы"
-end
-
-str = readFromFile(ARGV[0])
+print "Исходная строка: "
+str = STDIN.gets.chomp
 
 months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"]
 result = Array.new

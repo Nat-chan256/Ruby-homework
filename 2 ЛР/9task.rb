@@ -12,20 +12,21 @@ end
 
 #16
 #Дан массив в котором находятся строки "белый", "синий" и "красный" в случайном порядке. Необходимо упорядочить массив так, чтобы получился российский флаг.
-def sortTricolor(arr)
+def sortTricolor(str)
 	sampleArr = ["белый", "синий", "красный"]
-	return arr.sort_by{|element| sampleArr.index(element.downcase)}
+	return str.split.sort_by{|element| sampleArr.index(element.downcase)}
 end
 
 
-#Чтение строки из файла
-def readFromFile(filePath)
-	if not File.file?(filePath) #Проверка существования файла
-		return nil
-	end
-    file = File.new(filePath, "r:UTF-8")
-    lines = file.readlines
-	return lines.join(" ")
+
+# Для адекватной работы с кириллицей в консоли
+if (Gem.win_platform?)
+  Encoding.default_external = Encoding.find(Encoding.locale_charmap)
+  Encoding.default_internal = __ENCODING__
+
+  [STDIN, STDOUT].each do |io|
+    io.set_encoding(Encoding.default_external, Encoding.default_internal)
+  end
 end
 
 answer = "1"
@@ -48,9 +49,9 @@ while answer != "0"
 			puts "Количество слов, состоящих из четного числа символов: #{countWordsOfEvenCharsNum(str)}"
 			
 		when "3"
-			print "Введите путь к файлу с массивом: "
-			filePath = STDIN.gets.chomp
-			puts "Результат сортировки #{sortTricolor(readFromFile(filePath).split())}"
+			print "Введите исходную строку: "
+			str = STDIN.gets.chomp
+			puts "Результат сортировки #{sortTricolor(str)}"
 		
 	end
 end
