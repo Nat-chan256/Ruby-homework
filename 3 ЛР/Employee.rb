@@ -3,10 +3,10 @@ module Emp
 class Employee
 
     attr_accessor :surname, :name, :patronymic,
-        :address, :passSeriesNumber, :speciality,
+        :address, :speciality,
         :experience
 	
-	attr_reader :phoneNumber, :email, :birthDate
+	attr_reader :phoneNumber, :email, :birthDate, :passSeriesNumber
 	
 	 def initialize(*args)
 		if not (args.length == 9 or args.length == 13)
