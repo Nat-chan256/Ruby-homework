@@ -11,30 +11,45 @@ module Crypt
             attr_reader :key, :iv
 
         def initialize(key = nil, iv = nil)
-            self.cipher = OpenSSL::Cipher.new 'AES-128-CBC'
-            if key == nil then self.key = generateKey else self.key = key end
-            self.iv = iv if iv != nil
+            self.cipher = OpenSSL::Cipher.new 'AES-256-CBC'
+			self.cipher.encrypt
+			
+			@fileWithKeyName = 'private.secure.pem'
+			@passPhrase = 'my secure pass phrase goes here'
+			@ivFileName = 'iv.txt'
+            if key == nil then self.key = readKeyFromFile else self.key = key end
+            if iv != nil then self.iv = iv else self.iv = readIvFromFile end
+			
+			self.cipher.key = Digest::MD5.hexdigest(self.key.to_s)
+			self.cipher.iv = self.iv
         end
 
-        def generateKey()
-            self.iv = self.cipher.random_iv
-            pwd = "some kind of very long password"
-            salt = OpenSSL::Random.random_bytes 16
-            iter = 20000
-            key_len = self.cipher.key_len
-            digest = OpenSSL::Digest::SHA256.new
-            return OpenSSL::PKCS5.pbkdf2_hmac(pwd, salt, iter, key_len, digest)
-        end
+		def readIvFromFile
+			file = File.open(@ivFileName)
+			data = file.read
+			file.close
+			data
+		end
 
-        def encrypt(text)
-            self.cipher.encrypt
-            self.cipher.key = self.key
-            self.cipher.iv = self.iv
-            encrypted = self.cipher.update text
-            encrypted << self.cipher.final
-            return Base64.encode64(encrypted).encode('utf-8')
-        end
+		def readKeyFromFile
+			key_pem = File.read @fileWithKeyName
+			key = OpenSSL::PKey::RSA.new key_pem, @passPhrase
+		end
 
+		def encrypt(str)
+			encrypted = @cipher.update(str)
+			encrypted << @cipher.final
+			encoded = Base64.encode64(encrypted).encode('utf-8')
+			encoded
+		end
+		
+		def decrypt(encrypted)
+			@cipher.decrypt
+			decrypted = @cipher.update encrypted
+			decrypted << @cipher.final
+			decrypter
+		end
+		
     end
 
 end

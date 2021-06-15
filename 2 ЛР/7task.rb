@@ -1,7 +1,10 @@
 #1.9
 #Нахождение элементов, расположенных перед последним минимальным
 def findElemsPreviousToLastMinimum(arr)
-	minIndex = array.rindex(array.min)
+	minIndex = arr.rindex(arr.min)
+	if minIndex == 0
+		return Array.new
+	end
 	return arr[0..minIndex-1]
 end
 
@@ -15,7 +18,7 @@ end
 #1.33
 #Проверка, чередуются ли в массиве положительные и отрицательные числа
 def doSignsAlternate(arr)
-	return arr.all?{ |i, j| i * j < 0}
+	return arr.each.with_index.all?{|elem, i| i == 0 or arr[i-1] * elem < 0}
 end
 
 #1.45

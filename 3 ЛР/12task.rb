@@ -15,3 +15,5 @@ terminal.addEmployee(fedor)
 terminal.addEmployee(maria)
 
 terminal.writeEmployeesToFile("Emps.txt")
+
+terminal.writeEmployeesToFileWithEcnryption("EmpsEnc.txt")

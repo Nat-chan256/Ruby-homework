@@ -144,10 +144,10 @@ def sortByWordsNum(lines)
 end
 
 
-# Сортировка по количеству слов, стоящих после чисео
+# Сортировка по количеству слов, стоящих после чисел
 # lines - массив строк
 def sortByWordsAfterNums(lines)
-	lines.sort_by {|line| line.split.select {|w1, w2| not w1.scan(/\d+/).empty?}.count}
+	lines.sort_by {|line| line.split.select {|w1, w2| not w1.scan(/^\d+$/).empty?}.count}
 end
 
 #3

@@ -3,4 +3,7 @@ include TestEmp
 
 test = TestEmployee.new
 
-test.createEmployees
+employees = test.createEmployees
+for emp in employees
+	puts "\n#{emp}"
+end
