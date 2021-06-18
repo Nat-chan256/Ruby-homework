@@ -38,15 +38,19 @@ include Crypt
 				self.prevWorkSalary = args[12]
 			end
 		end
-		
-		
+
+		# Геттеры
+		def fullName
+			return "#{@surname} #{@name} #{@patronymic}"
+		end
+
 		# Сеттеры
 		def birthDate=(val)
 			@birthDate = checkDate(val)
 		end
 		
 		def email=(val)
-			@email = checkEmail(val)
+			@email = Employee.normalizeEmail(val)
 		end
 		
 		def fullName=(val)
@@ -54,15 +58,12 @@ include Crypt
 		end
 		
 		def passSeriesNumber=(val)
-			@passSeriesNumber = checkPassportData(val)
+			@passSeriesNumber = Employee.normalizePassportData(val)
 		end
 		
 		def phoneNumber=(val)
-			@phoneNumber=checkPhoneNumber(val)
+			@phoneNumber=Employee.normalizePhoneNumber(val)
 		end
-		
-		
-		
 		
 		def checkDate(date)
 			if not isDate(date)
@@ -86,15 +87,15 @@ include Crypt
 			end.join(".")
 		end
 		
-		def checkEmail(email)
-			if not isEmail(email)
+		def self.normalizeEmail(email)
+			if not Employee.isEmail(email)
 				raise "Некорректный email"
 			end
 			
 			return email.delete(" ").downcase
 		end
 		
-		def checkFullName(name)
+		def self.normalizeFullName(name)
 			if not Employee.isFullName(name)
 				raise "Некорректное ФИО"
 			end
@@ -113,26 +114,27 @@ include Crypt
 			end.join(" ")
 		end
 		
-		def checkPassportData(passportData)
-			if not isPassportData(passportData)
+		def self.normalizePassportData(passportData)
+			if not Employee.isPassportData(passportData)
 				raise "Некорректные паспортные данные"
 			end
 			
 			return passportData.split.join(" ")
 		end
 		
-		def checkPhoneNumber(number)
-			if not isRusPhoneNum(number)
+		def self.normalizePhoneNumber(number)
+			if not Employee.isRusPhoneNum(number)
 				raise "Некорректный номер телефона"
 			end
-			
+			number.gsub!(/^8/, "7")
+
 			return number.delete("-").delete(" ").delete("(").delete(")").delete("+").insert(1, "-").insert(5, "-") 
 		end
 		
 
 		#Конвертирует ФИО в массив, где элементы - это фамилия, имя и отчество
 		def convertFullNameToArray(fullName)
-			checkedFullName = checkFullName(fullName)
+			checkedFullName = Employee.normalizeFullName(fullName)
 			
 			arr = checkedFullName.split
 			name = arr[0]
@@ -193,7 +195,7 @@ include Crypt
 			str.split(".")[1].to_i >= 1 and str.split(".")[1].to_i <= 12) #Проверка месяца
 		end
 		
-		def isEmail(str)
+		def self.isEmail(str)
 			return str.scan(/^(\s*)?[\w\d\-_\.!~\*'\(\)]+@[\w]{2,}\.[\w]{2,}(\s*)?$/).length == 1
 		end
 		
@@ -201,11 +203,11 @@ include Crypt
 			return str.scan(/^(((\s*)?[a-zA-Zа-яА-Я]+((\s*)?\-(\s*)?[a-zA-Zа-яА-Я]+)?\s)){2}((\s*)?[a-zA-Zа-яА-Я]+(\s+[a-zA-Zа-яА-Я]+)?)(\s*)?$/).length == 1
 		end
 		
-		def isPassportData(str)
+		def self.isPassportData(str)
 			return str.scan(/\s*\d{4}\s+\d{6}\s*/).length == 1
 		end
 		
-		def isRusPhoneNum(str)
+		def self.isRusPhoneNum(str)
 			return str.scan(/^(\s*)?(\+?7|8)([(\- ]?\d{3}[)\- ]?)(\d{3}[\- ]?\d{2}[\- ]?\d{2}|\d{2}[\- ]?\d{3}[\- ]?\d{2})(\s*)?$/).length == 1
 		end
 		

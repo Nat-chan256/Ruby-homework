@@ -14,11 +14,41 @@ module ListEmp
 			self.empList << emp
 		end
 		
+		def findEmployeeByEmail(email)
+			if not Employee.isEmail(email)
+				raise "Email некорректен"
+			end
+			email = Employee.normalizeEmail(email)
+			empList.select{|emp| emp.email == email}
+		end
+		
 		def findEmployeeByFullName(surname, name, patronymic)
-			if not Employee.isFullName("#{surname} #{name} #{patronymic}")
+			fullName = "#{surname} #{name} #{patronymic}"
+			if not Employee.isFullName(fullName)
 				raise "ФИО некорректно"
 			end
-			empList.select{|emp| emp.surname == surname and emp.name == name and emp.patronymic == patronymic}
+			fullName = Employee.normalizeFullName(fullName)
+
+			empList.select{|emp| emp.fullName == fullName}
+		end
+
+		def findEmployeeByPassportData(passportSeries, passportNumber)
+			passportData = "#{passportSeries} #{passportNumber}"
+			if not Employee.isPassportData(passportData)
+				raise "Паспортные данные некорректны"
+			end
+			passportData = Employee.normalizePassportData(passportData)
+
+			empList.select{|emp| emp.passSeriesNumber == passportData}
+		end
+
+		def findEmployeeByPhoneNumber(phoneNumber)
+			if not Employee.isRusPhoneNum(phoneNumber)
+				raise "Номер телефона некорректен"
+			end
+			phoneNumber = Employee.normalizePhoneNumber(phoneNumber)
+
+			empList.select{|emp| emp.phoneNumber == phoneNumber}
 		end
 		
 		def showEmployees

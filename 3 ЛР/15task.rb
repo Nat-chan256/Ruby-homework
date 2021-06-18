@@ -9,7 +9,7 @@ empList.addEmployee(emp1)
 empList.addEmployee(emp2)
 
 # Находим сотрудника
-emp = empList.findEmployeeByFullName("Федоров", "Федор", "Федорович")
+emp = empList.findEmployeeByFullName("ФЕДОРОВ", "Федор", "Федорович")
 puts emp
 
 # Ищем сотрудника, которого нет в списке
