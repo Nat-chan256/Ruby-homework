@@ -1,4 +1,6 @@
 module ListEmp
+	require 'date'
+
 	require_relative "Employee"
 
 	include Emp
@@ -59,5 +61,46 @@ module ListEmp
 				i += 1
 			end
 		end
+
+		def sortByAddress!
+			@empList.sort_by! {|emp| emp.address}
+		end
+
+		def sortByBirthDate!
+			@empList.sort_by! {|emp| DateTime.parse(emp.birthDate)}
+		end
+
+		def sortByEmail!
+			@empList.sort_by! {|emp| emp.email}
+		end
+
+		def sortByExperience!
+			@empList.sort_by! {|emp| emp.experience}
+		end
+
+		def sortByName!
+			@empList.sort_by! {|emp| emp.name}
+		end
+
+		def sortByPassportData!
+			@empList.sort_by! {|emp| emp.passSeriesNumber}
+		end
+
+		def sortByPatronymic!
+			@empList.sort_by! {|emp| emp.patronymic}
+		end
+
+		def sortByPhoneNumber!
+			@empList.sort_by! {|emp| emp.phoneNumber}
+		end
+
+		def sortBySpeciality!
+			@empList.sort_by! {|emp| emp.speciality}
+		end
+
+		def sortBySurname!
+			@empList.sort_by! {|emp| emp.surname}
+		end
+
 	end
 end
