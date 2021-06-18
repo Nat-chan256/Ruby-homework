@@ -211,18 +211,18 @@ include Crypt
 		
 		def to_s
 			employeeData = "#{@surname} #{@name} #{@patronymic} 
-	Дата рождения: #{@birthDate} 
-	Номер телефона: #{@phoneNumber} 
-	Адрес: #{@address} 
-	email: #{@email} 
-	Серия и номер паспорта: #{@passSeriesNumber} 
-	Специальность: #{@speciality} 
-	Стаж работы по специальности (в годах): #{@experience}"
+Дата рождения: #{@birthDate} 
+Номер телефона: #{@phoneNumber} 
+Адрес: #{@address} 
+email: #{@email} 
+Серия и номер паспорта: #{@passSeriesNumber} 
+Специальность: #{@speciality} 
+Стаж работы по специальности (в годах): #{@experience}"
 
 			if @experience != 0
 				employeeData += "\nПредыдущее место работы: #{@prevWorkName} 
-	Должность на пред. месте работы: #{@prevWorkPostName} 
-	Зар.плата на пред. месте работы: #{@prevWorkSalary}"
+Должность на пред. месте работы: #{@prevWorkPostName} 
+Зар.плата на пред. месте работы: #{@prevWorkSalary}"
 			end
 			
 			employeeData
