@@ -14,6 +14,13 @@ module ListEmp
 			self.empList << emp
 		end
 		
+		def findEmployeeByFullName(surname, name, patronymic)
+			if not Employee.isFullName("#{surname} #{name} #{patronymic}")
+				raise "ФИО некорректно"
+			end
+			empList.select{|emp| emp.surname == surname and emp.name == name and emp.patronymic == patronymic}
+		end
+		
 		def showEmployees
 			i = 1
 			empList.each do 

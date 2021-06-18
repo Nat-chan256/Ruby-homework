@@ -50,7 +50,7 @@ include Crypt
 		end
 		
 		def fullName=(val)
-			@name, @surname, @patronymic = convertFullNameToArray(val)
+			@surname, @name, @patronymic = convertFullNameToArray(val)
 		end
 		
 		def passSeriesNumber=(val)
@@ -95,7 +95,7 @@ include Crypt
 		end
 		
 		def checkFullName(name)
-			if not isFullName(name)
+			if not Employee.isFullName(name)
 				raise "Некорректное ФИО"
 			end
 			
@@ -197,7 +197,7 @@ include Crypt
 			return str.scan(/^(\s*)?[\w\d\-_\.!~\*'\(\)]+@[\w]{2,}\.[\w]{2,}(\s*)?$/).length == 1
 		end
 		
-		def isFullName(str)
+		def self.isFullName(str)
 			return str.scan(/^(((\s*)?[a-zA-Zа-яА-Я]+((\s*)?\-(\s*)?[a-zA-Zа-яА-Я]+)?\s)){2}((\s*)?[a-zA-Zа-яА-Я]+(\s+[a-zA-Zа-яА-Я]+)?)(\s*)?$/).length == 1
 		end
 		
