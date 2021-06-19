@@ -1,4 +1,7 @@
 module LoanData
+	require_relative "Client"
+	include ClientModule
+
 	class Loan
 		attr_accessor :client, :grantingLoanDate, :loanRepaymentDate, :mortgagedPropertyDict
 
@@ -8,6 +11,15 @@ module LoanData
 			self.loanRepaymentDate = loanRepaymentDate
 			self.mortgagedPropertyDict = mortgagedPropertyDict
 		end
+
+		# Setters
+		def grantingLoanDate= (date)
+			@grantingLoanDate = Client.normalizeDate(date)
+		end
+
+		def loanRepaymentDate= (date)
+			@loanRepaymentDate = Client.normalizeDate(date)
+		end		
 
 		def to_s
 			"ФИО клиента: #{self.client.surname} #{self.client.name} #{self.client.patronymic}
