@@ -63,7 +63,9 @@ class TerminalViewListEmployee
 			crypt = Cryptographer.new
 
 			empData = emp.to_s
-			empData.gsub!(/\d{4}\s\d{6}/, crypt.encrypt(empData.scan(/\d{4}\s\d{6}/)[0]).chomp)
+			encryptedPass = crypt.encrypt(empData.scan(/\d{4}\s\d{6}/)[0]).chomp
+			puts encryptedPass
+			empData.gsub!(/\d{4}\s\d{6}/, encryptedPass)
 
 			file.write(empData + "\n")
 			file.write("========================================\n")
