@@ -10,6 +10,17 @@ module ClientModule
 			self.address = address
 			self.birthDate = birthDate
 		end
+
+		def to_s
+			"Фамилия: #{self.surname}
+Имя: #{self.name}
+Отчество: #{self.patronymic}
+Дата рождения: #{self.birthDate}
+Серия и номер паспорта: #{self.passportData.series} #{self.passportData.number}
+Выдан: #{self.passportData.issuedBy}; дата выдачи: #{self.passportData.issueDate}
+Гражданство: #{self.passportData.citizenship}
+Адрес: #{self.address}"
+		end
 	end
 
 	class PassportData
