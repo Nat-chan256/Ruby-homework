@@ -21,6 +21,7 @@ module LoanData
 			@loanRepaymentDate = Client.normalizeDate(date)
 		end		
 
+
 		def to_s
 			"ФИО клиента: #{self.client.surname} #{self.client.name} #{self.client.patronymic}
 Дата выдачи займа: #{self.grantingLoanDate}

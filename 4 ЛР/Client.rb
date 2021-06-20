@@ -11,6 +11,11 @@ module ClientModule
 			self.birthDate = birthDate
 		end
 
+		# Geters
+		def fullName
+			return "#{@surname} #{@name} #{@patronymic}"
+		end
+
 		# Setters
 
 		def fullName= (fullName)
