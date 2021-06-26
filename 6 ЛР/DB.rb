@@ -53,18 +53,18 @@ module DB
 				# Insert loan
 				@client.query("INSERT INTO loans(clientPassportSeries, clientPassportNumber, grantingDate, repaymentDate) VALUES ('#{passportSeries}', '#{passportNumber}', '#{grantingDate}', '#{repaymentDate}')")
 				
-				puts "\n\nCurrent loans"
-				showLoansTable
-				
 				# Insert appropriate property
 				loanId = @client.query("SELECT MAX(id) FROM loans")
+				id = 0
 				
-				puts "MAX ID #{loanId}"
+				loanId.each{|row| id = row["MAX(id)"]}
 				
-				loan.mortgagedProperty.keys.each do |key| 
+				loan.mortgagedPropertyDict.keys.each do |key| 
 					propertyName = @client.escape(key)
-		
-					@client.query("INSERT INTO mortgagedProperty VALUES(#{loanId}, '#{propertyName}', #{mortgagedProperty[key]})")
+					
+					sql = "INSERT INTO mortgagedProperty VALUES(#{id}, '#{propertyName}', #{loan.mortgagedPropertyDict[key]})"
+					
+					@client.query(sql)
 				end
 			rescue
 			end

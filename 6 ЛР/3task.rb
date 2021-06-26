@@ -32,7 +32,6 @@ loan2 = Loan.new(elena, "24.05.21", "24.06.21", {"Золотой кулон с �
 loan3 = Loan.new(anna, "14.04.2021", "21.04.2021", {"Наручные часы" => 15000}) 
 
 # Insert loans into database
-dbInstance.clearLoansTable
 dbInstance.addLoanToDB(loan1)
 dbInstance.addLoanToDB(loan2)
 dbInstance.addLoanToDB(loan3)
