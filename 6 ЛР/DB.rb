@@ -1,18 +1,25 @@
 module DB
 	require_relative "../4 ЛР/Client"
 	require_relative "../4 ЛР/Loan"
+	require_relative "../4 ЛР/ClientsListModule"
+	require_relative "../4 ЛР/LoansListModule"
 
 	require 'mysql2'
 	require 'date'
 	
 	include ClientModule
 	include LoanData
+	include ClientsListModule
+	include LoansListModule
 
 	class DriverDB
+		attr_reader :clientsList, :loansList
 		@instance = nil
 		
 		def initialize
 			@client = Mysql2::Client.new(:host => "localhost", :username => "root", :database => "pawnshop")
+			@clientsList = readClientsList
+			@loansList = readLoansList
 		end
 		
 		private_class_method :new
@@ -38,6 +45,8 @@ module DB
 			
 			begin
 				@client.query("INSERT INTO clients VALUES ('#{surname}', '#{name}', '#{patronymic}', '#{passportSeries}', '#{passportNumber}', '#{citizenship}', '#{issuedBy}', '#{issueDate}', '#{address}', '#{birthDate}')")
+				
+				@clientsList.addClient(client)
 			rescue
 				
 			end
@@ -66,6 +75,7 @@ module DB
 					
 					@client.query(sql)
 				end
+				@loansList.addLoan(loan)
 			rescue
 			end
 		end
@@ -79,12 +89,25 @@ module DB
 		end
 		
 		def createClientFromDBEntry(row)
-			
 			passportData = PassportData.new(row["passportSeries"], row["passportNumber"], row["citizenship"], row["passportIssuedBy"], row["passportIssueDate"].strftime("%d.%m.%y"))
 				
 			client = Client.new(row["surname"], row["name"], row["patronymic"], row["birthDate"].strftime("%d.%m.%y"), passportData, row["address"])
 			
 			client
+		end
+		
+		def readClientsList
+			clientsList = ClientsList.new
+			clientsFromDB = selectClients
+			clientsList.addClients(clientsFromDB)
+			clientsList
+		end
+		
+		def readLoansList
+			loansList = LoansList.new
+			loansFromDB = selectLoans
+			loansList.addLoans(loansFromDB)
+			loansList
 		end
 		
 		def selectClients

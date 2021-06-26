@@ -11,7 +11,11 @@ module ClientsListModule
 		end
 
 		def addClient(client)
-			clientsList << client
+			@clientsList << client
+		end
+
+		def addClients(clients)
+			@clientsList = @clientsList + clients
 		end
 
 		def findClientByFullName(surname, name, patronymic)
