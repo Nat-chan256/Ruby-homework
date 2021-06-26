@@ -14,6 +14,10 @@ module LoansListModule
 			@loansList << loan
 		end
 
+		def addLoans(loans)
+			@loansList = @loansList + loans
+		end
+
 		def findLoanByClientFullNameAndGrantingDate(surname, name, patronymic, grantingDate)
 			fullName = "#{surname} #{name} #{patronymic}"
 			if not Client.isFullName(fullName)
