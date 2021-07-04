@@ -17,6 +17,24 @@ module ClientsListModule
 		def addClients(clients)
 			@clientsList = @clientsList + clients
 		end
+		
+		def addToDB
+			dbInstance = DriverDB.getInstance
+			dbInstance.addClientsToDB(@clientsList)
+		end
+
+		# Updates client in DB
+		def changeClient(client)
+			updateClient(client)
+			dbInstance = DriverDB.getInstance
+			dbInstance.changeClient(client)
+		end
+
+		def deleteClient(client)
+			remove(client)
+			dbInstance = DriverDB.getInstance
+			dbInstance.deleteClient(client)
+		end
 
 		def findClientByFullName(surname, name, patronymic)
 			fullName = "#{surname} #{name} #{patronymic}"
@@ -38,6 +56,10 @@ module ClientsListModule
 			number = PassportData.normalizeNumber(passportNumber)
 
 			@clientsList.select{|client| client.passportData.series == series and client.passportData.number == number}
+		end
+
+		def remove(clientToRemove)
+			@clientsList.delete_if {|client| client.passportData.series == clientToRemove.passportData.series and client.passportData.number == clientToRemove.passportData.number}
 		end
 
 		def sortByAddress!
@@ -66,6 +88,10 @@ module ClientsListModule
 
 		def to_s
 			clientsList.join("\n\n")
+		end
+
+		def updateClient(clientToUpdate)
+			@clientsList.each {|client| client = clientToUpdate if client.passportData.series == clientToUpdate.passportData.series and client.passportData.number == clientToUpdate.passportData.number}
 		end
 
 	end

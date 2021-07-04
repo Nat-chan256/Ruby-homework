@@ -31,6 +31,10 @@ module DB
 			@instance
 		end
 		
+		def addClientsToDB(clients)
+			clients.each{|client| addClientToDB(client)}
+		end
+		
 		def addClientToDB(client)
 			surname = @client.escape(client.surname)
 			name = @client.escape(client.name)
@@ -50,6 +54,10 @@ module DB
 			rescue
 				
 			end
+		end
+		
+		def addLoansToDB(loans)
+			loans.each {|loan| addLoanToDB(loan)}
 		end
 		
 		def addLoanToDB(loan)
@@ -80,6 +88,52 @@ module DB
 			end
 		end
 		
+		def changeClient(clientWithNewData)
+			surname = @client.escape(clientWithNewData.surname)
+			name = @client.escape(clientWithNewData.name)
+			patronymic = @client.escape(clientWithNewData.patronymic)
+			birthDate = Date.parse(@client.escape(clientWithNewData.birthDate)).to_s
+			passportSeries = @client.escape(clientWithNewData.passportData.series)
+			passportNumber = @client.escape(clientWithNewData.passportData.number)
+			citizenship = @client.escape(clientWithNewData.passportData.citizenship)
+			issuedBy = @client.escape(clientWithNewData.passportData.issuedBy)
+			issueDate = Date.parse(@client.escape(clientWithNewData.passportData.issueDate)).to_s
+			address = @client.escape(clientWithNewData.address)
+		
+			sql = "UPDATE clients SET surname = '#{surname}', name = '#{name}', patronymic = '#{patronymic}', citizenship = '#{citizenship}', passportIssuedBy = '#{issuedBy}', passportIssueDate = '#{issueDate}', address = '#{address}', birthDate = '#{birthDate}' WHERE passportSeries = '#{passportSeries}' AND passportNumber = #{passportNumber}"
+			
+			@client.query(sql)
+			
+			@clientsList.updateClient(clientWithNewData)
+		end
+		
+		def changeLoan(loan)
+			passportSeries = @client.escape(loan.client.passportData.series)
+			passportNumber = @client.escape(loan.client.passportData.number)
+			grantingDate = Date.parse(loan.grantingLoanDate).to_s
+			repaymentDate = Date.parse(loan.loanRepaymentDate).to_s
+			
+			begin
+				# Insert loan
+				@client.query("UPDATE loans SET grantingDate = '#{grantingDate}', repaymentDate = '#{repaymentDate}' WHERE clientPassportSeries = '#{passportSeries}' AND clientPassportNumber = '#{passportNumber}'")
+				
+				# Insert appropriate property
+				id = findLoanId(loan)
+				
+				removeMortgagedPropertyWithLoanId(id)
+				
+				loan.mortgagedPropertyDict.keys.each do |key| 
+					propertyName = @client.escape(key)
+					
+					sql = "INSERT INTO mortgagedProperty VALUES(#{id}, '#{propertyName}', #{loan.mortgagedPropertyDict[key]})"
+					
+					@client.query(sql)
+				end
+				@loansList.updateLoan(loan)
+			rescue
+			end
+		end
+		
 		def clearLoansTable
 			@client.query("DELETE FROM loans")
 		end
@@ -96,6 +150,33 @@ module DB
 			client
 		end
 		
+		def deleteClient(client)
+			@client.query("DELETE FROM clients WHERE passportSeries = '#{client.passportData.series}' AND passportNumber = #{client.passportData.number}")
+			@clientsList.remove(client)
+		end
+		
+		def deleteLoan(loan)
+			id = findLoanId(loan)
+			@client.query("DELETE FROM mortgagedProperty WHERE loanId = #{id}")
+			@client.query("DELETE FROM loans WHERE id = #{id}")
+			@loansList.remove(loan)
+		end
+		
+		def findLoanId(loan)
+			loanId = @client.query("SELECT * FROM loans WHERE clientPassportSeries = '#{loan.client.passportData.series}' AND clientPassportNumber = '#{loan.client.passportData.number}'") #AND grantingDate = '#{loan.grantingLoanDate}'")
+			id = 0	
+			loanId.each{|row| id = row["id"]}
+			id
+		end
+		
+		def flush
+			@client.query("DELETE FROM mortgagedProperty")
+			@client.query("DELETE FROM loans")
+			@client.query("DELETE FROM clients")
+			@clientsList = ClientsList.new
+			@loansList = LoansList.new
+		end
+		
 		def readClientsList
 			clientsList = ClientsList.new
 			clientsFromDB = selectClients
@@ -108,6 +189,10 @@ module DB
 			loansFromDB = selectLoans
 			loansList.addLoans(loansFromDB)
 			loansList
+		end
+		
+		def removeMortgagedPropertyWithLoanId(id)
+			@client.query("DELETE FROM mortgagedProperty WHERE loanId = #{id}")
 		end
 		
 		def selectClients

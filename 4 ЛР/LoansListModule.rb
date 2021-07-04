@@ -18,6 +18,24 @@ module LoansListModule
 			@loansList = @loansList + loans
 		end
 
+		def addToDB
+			dbInstance = DriverDB.getInstance
+			dbInstance.addLoansToDB(@loansList)
+		end
+
+		# Updates the loan in DB
+		def changeLoan(loan)
+			updateLoan(loan)
+			dbInstance = DriverDB.getInstance
+			dbInstance.changeLoan(loan)
+		end
+
+		def deleteLoan(loan)
+			remove(loan)
+			dbInstance = DriverDB.getInstance
+			dbInstance.deleteLoan(loan)
+		end
+
 		def findLoanByClientFullNameAndGrantingDate(surname, name, patronymic, grantingDate)
 			fullName = "#{surname} #{name} #{patronymic}"
 			if not Client.isFullName(fullName)
@@ -31,6 +49,10 @@ module LoansListModule
 			grantingDate = Client.normalizeDate(grantingDate)
 
 			loansList.select{|loan| loan.client.fullName == fullName and loan.grantingLoanDate == grantingDate}
+		end
+
+		def remove(loanToRemove)
+			@loansList.delete_if {|loan| loan.client.passportData.series == loanToRemove.client.passportData.series and loan.client.passportData.number == loanToRemove.client.passportData.number and loan.grantingLoanDate == loanToRemove.grantingLoanDate}
 		end
 
 		def sortByClientFullName!
@@ -51,6 +73,10 @@ module LoansListModule
 
 		def to_s
 			@loansList.join("\n\n")
+		end
+
+		def updateLoan(loanToUpdate)
+			@loansList.each{|loan| loan = loanToUpdate if loan.client.passportData.series == loanToUpdate.client.passportData.series and loan.client.passportData.number == loanToUpdate.client.passportData.number and loan.grantingLoanDate == loanToUpdate.grantingLoanDate}
 		end
 
 	end
