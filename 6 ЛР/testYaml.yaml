@@ -1,0 +1,25 @@
+---
+- !ruby/object:ClientModule::Client
+  surname: Романченко
+  name: Виктория
+  patronymic: Викторовна
+  passportData: !ruby/object:ClientModule::PassportData
+    series: '9494'
+    number: '949494'
+    citizenship: Российская Федерация
+    issuedBy: Отдел внутренних дел 'Гольяново' гор. Москвы
+    issueDate: 10.08.2004
+  address: Петра Метальникова д.14
+  birthDate: 27.07.1979
+- !ruby/object:ClientModule::Client
+  surname: Рубцов
+  name: Анатолий
+  patronymic: Сергеевич
+  passportData: !ruby/object:ClientModule::PassportData
+    series: '9509'
+    number: '509509'
+    citizenship: Российская Федерация
+    issuedBy: Отдел внутренних дел 'Гольяново' гор. Москвы
+    issueDate: 10.08.2004
+  address: Петра Метальникова д.14
+  birthDate: 27.07.1979

@@ -2,6 +2,7 @@ module ClientsListModule
 	require_relative "Client"
 	include ClientModule
 	require 'date'
+	require 'yaml'
 
 	class ClientsList
 		attr_reader :clientsList
@@ -58,6 +59,10 @@ module ClientsListModule
 			@clientsList.select{|client| client.passportData.series == series and client.passportData.number == number}
 		end
 
+		def readListYAML(fileName)
+			@clientsList = YAML::load(File.open(fileName))
+		end
+
 		def remove(clientToRemove)
 			@clientsList.delete_if {|client| client.passportData.series == clientToRemove.passportData.series and client.passportData.number == clientToRemove.passportData.number}
 		end
@@ -94,5 +99,10 @@ module ClientsListModule
 			@clientsList.each {|client| client = clientToUpdate if client.passportData.series == clientToUpdate.passportData.series and client.passportData.number == clientToUpdate.passportData.number}
 		end
 
+		def writeListYAML(fileName)
+			File.open(fileName, 'w:UTF-8') do |file|
+				file.puts(@clientsList.to_yaml)
+			end
+		end
 	end
 end
