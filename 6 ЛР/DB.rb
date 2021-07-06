@@ -139,6 +139,7 @@ module DB
 		end
 		
 		def close
+			serialize
 			@client.close
 		end
 		
@@ -225,6 +226,11 @@ module DB
 				loansList << loan
 			end
 			loansList
+		end
+	
+		def serialize
+			@clientsList.writeListJSON
+			@loansList.writeListJSON
 		end
 	
 		def showLoansTable
