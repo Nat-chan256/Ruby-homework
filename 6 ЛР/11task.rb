@@ -18,11 +18,11 @@ clientsList.addClient(vika)
 clientsList.addClient(tolik)
 
 # Write to file
-clientsList.writeListYAML("testYaml.yaml")
+clientsList.writeListJSON("clientsJson.json")
 
 # Read from file
 clientsList2 = ClientsList.new
-clientsList2.readListYAML("testYaml.yaml")
+clientsList2.readListJSON("clientsJson.json")
 
 # Output
 puts "СОЗДАННЫЕ КЛИЕНТЫ"
@@ -42,11 +42,11 @@ loansList.addLoan(loan1)
 loansList.addLoan(loan2)
 
 # Write to file
-loansList.writeListYAML("testYamlLoans.yaml")
+loansList.writeListJSON("loansJSON.json")
 
 # Read from file
 loansList2 = LoansList.new
-loansList2.readListYAML("testYamlLoans.yaml")
+loansList2.readListJSON("loansJSON.json", "clientsJson.json")
 
 # Output
 puts "\n\n========================="

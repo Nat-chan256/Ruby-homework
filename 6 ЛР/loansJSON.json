@@ -1,0 +1,20 @@
+{
+  "0": {
+    "clientPassportSeries": "9494",
+    "clientPassportNumber": "949494",
+    "grantingLoanDate": "17.08.2020",
+    "loanRepaymentDate": "28.11.2020",
+    "mortgagedProperty": {
+      "Планшет Samsung": 16000
+    }
+  },
+  "1": {
+    "clientPassportSeries": "9509",
+    "clientPassportNumber": "509509",
+    "grantingLoanDate": "24.05.2021",
+    "loanRepaymentDate": "24.06.2021",
+    "mortgagedProperty": {
+      "Золотой кулон с бриллиантами": 40000
+    }
+  }
+}

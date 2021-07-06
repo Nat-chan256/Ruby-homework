@@ -12,6 +12,12 @@ module ClientModule
 		end
 
 		# Geters
+		
+		# Returns hash with class fields names as keys and corresponding values as values
+		def attributes
+			{"surname" => self.surname, "name" => self.name, "patronymic" => self.patronymic, "passportSeries" => self.passportData.series, "passportNumber" => self.passportData.number, "citizenship" => self.passportData.citizenship, "passportIssuedBy" => self.passportData.issuedBy, "passportIssuedDate" => self.passportData.issueDate, "address" => self.address, "birthDate" => self.birthDate}
+		end
+		
 		def fullName
 			return "#{@surname} #{@name} #{@patronymic}"
 		end

@@ -1,0 +1,26 @@
+{
+  "0": {
+    "surname": "Романченко",
+    "name": "Виктория",
+    "patronymic": "Викторовна",
+    "passportSeries": "9494",
+    "passportNumber": "949494",
+    "citizenship": "Российская Федерация",
+    "passportIssuedBy": "Отдел внутренних дел 'Гольяново' гор. Москвы",
+    "passportIssueDate": "10.08.2004",
+    "birthDate": "27.07.1979",
+    "address": "Петра Метальникова д.14"
+  },
+  "1": {
+    "surname": "Рубцов",
+    "name": "Анатолий",
+    "patronymic": "Сергеевич",
+    "passportSeries": "9509",
+    "passportNumber": "509509",
+    "citizenship": "Российская Федерация",
+    "passportIssuedBy": "Отдел внутренних дел 'Гольяново' гор. Москвы",
+    "passportIssueDate": "10.08.2004",
+    "birthDate": "27.07.1979",
+    "address": "Петра Метальникова д.14"
+  }
+}

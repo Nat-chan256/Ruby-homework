@@ -51,6 +51,27 @@ module LoansListModule
 			loansList.select{|loan| loan.client.fullName == fullName and loan.grantingLoanDate == grantingDate}
 		end
 
+		def readListJSON(loansFileName, clientsFileName)
+			clients = ClientsList.new
+			clients.readListJSON(clientsFileName)
+		
+			File.open(loansFileName, 'r:UTF-8') do |file|
+				data = JSON.parse(file.read)
+				data.each do |key, value|
+					client = clients.findClientByPassportData(value["clientPassportSeries"], value["clientPassportNumber"])
+					mortgagedProperty = Hash.new
+					mortgagedPropertyJSON = value["mortgagedProperty"]
+					mortgagedPropertyJSON.each {|key, value| mortgagedProperty[key] = value}
+					loan = Loan.new(client, value["grantingLoanDate"], value["loanRepaymentDate"], mortgagedProperty)
+					addLoan(loan)
+				end
+			end
+		end
+
+		def readListYAML(fileName)
+			@loansList = YAML::load(File.open(fileName))
+		end
+
 		def remove(loanToRemove)
 			@loansList.delete_if {|loan| loan.client.passportData.series == loanToRemove.client.passportData.series and loan.client.passportData.number == loanToRemove.client.passportData.number and loan.grantingLoanDate == loanToRemove.grantingLoanDate}
 		end
@@ -77,6 +98,28 @@ module LoansListModule
 
 		def updateLoan(loanToUpdate)
 			@loansList.each{|loan| loan = loanToUpdate if loan.client.passportData.series == loanToUpdate.client.passportData.series and loan.client.passportData.number == loanToUpdate.client.passportData.number and loan.grantingLoanDate == loanToUpdate.grantingLoanDate}
+		end
+		
+		def writeListJSON(fileName)
+			File.open(fileName,"w:UTF-8") do |file|
+				tempHash = {}
+				@loansList.each_with_index do |loan, ind|
+					tempHash[ind] = {
+						"clientPassportSeries": loan.client.passportData.series,
+						"clientPassportNumber": loan.client.passportData.number,
+						"grantingLoanDate": loan.grantingLoanDate,
+						"loanRepaymentDate": loan.loanRepaymentDate,
+					}
+					tempHash[ind]["mortgagedProperty"] = loan.mortgagedPropertyDict
+				end
+				file.write(JSON.pretty_generate(tempHash))
+			end
+		end
+		
+		def writeListYAML(fileName)
+			File.open(fileName, 'w:UTF-8') do |file|
+				file.puts(@loansList.to_yaml)
+			end
 		end
 
 	end

@@ -1,0 +1,35 @@
+---
+- !ruby/object:LoanData::Loan
+  client: !ruby/object:ClientModule::Client
+    surname: Романченко
+    name: Виктория
+    patronymic: Викторовна
+    passportData: !ruby/object:ClientModule::PassportData
+      series: '9494'
+      number: '949494'
+      citizenship: Российская Федерация
+      issuedBy: Отдел внутренних дел 'Гольяново' гор. Москвы
+      issueDate: 10.08.2004
+    address: Петра Метальникова д.14
+    birthDate: 27.07.1979
+  grantingLoanDate: 17.08.2020
+  loanRepaymentDate: 28.11.2020
+  mortgagedPropertyDict:
+    Планшет Samsung: 16000
+- !ruby/object:LoanData::Loan
+  client: !ruby/object:ClientModule::Client
+    surname: Рубцов
+    name: Анатолий
+    patronymic: Сергеевич
+    passportData: !ruby/object:ClientModule::PassportData
+      series: '9509'
+      number: '509509'
+      citizenship: Российская Федерация
+      issuedBy: Отдел внутренних дел 'Гольяново' гор. Москвы
+      issueDate: 10.08.2004
+    address: Петра Метальникова д.14
+    birthDate: 27.07.1979
+  grantingLoanDate: 24.05.2021
+  loanRepaymentDate: 24.06.2021
+  mortgagedPropertyDict:
+    Золотой кулон с бриллиантами: 40000
