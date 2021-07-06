@@ -229,8 +229,8 @@ module DB
 		end
 	
 		def serialize
-			@clientsList.writeListJSON
-			@loansList.writeListJSON
+			@clientsList.writeListJSON("cleints.json")
+			@loansList.writeListJSON("loans.json")
 		end
 	
 		def showLoansTable

@@ -1,0 +1,11 @@
+{
+  "0": {
+    "clientPassportSeries": "9509",
+    "clientPassportNumber": "509509",
+    "grantingLoanDate": "24.05.2021",
+    "loanRepaymentDate": "24.06.2021",
+    "mortgagedProperty": {
+      "Золотой кулон с бриллиантами": 40000
+    }
+  }
+}
